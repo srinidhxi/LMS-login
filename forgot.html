@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forgot Password</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #f3f6f9;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.5s;
+    }
+
+    body.dark {
+      background-color: #121212;
+    }
+
+    .forgot-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.dark .forgot-container {
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .forgot-container h2 {
+      color: #1a237e;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    body.dark .forgot-container h2 {
+      color: #90caf9;
+    }
+
+    .illustration {
+      max-width: 160px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding-top: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark .form-control {
+      background: #2c2c2c;
+      color: #fff;
+      border-color: #555;
+    }
+
+    body.dark ::placeholder {
+      color: #ccc;
+      opacity: 1;
+    }
+
+    .btn-reset {
+      background: #1a237e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 10px 0;
+      transition: background 0.3s;
+    }
+
+    .btn-reset:hover {
+      background: #041885;
+    }
+
+    .bottom-text {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .bottom-text a {
+      color: #1a237e;
+      text-decoration: none;
+    }
+
+    body.dark .bottom-text a {
+      color: #90caf9;
+    }
+
+    .bottom-text a:hover {
+      text-decoration: underline;
+    }
+
+    .spinner-border {
+      width: 20px;
+      height: 20px;
+      display: none;
+      vertical-align: middle;
+    }
+
+    .spinner-border.show {
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .mode-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #1a237e;
+    }
+
+    body.dark .mode-toggle {
+      color: #90caf9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mode-toggle" onclick="toggleMode()">
+    <i class="bi bi-brightness-high" id="modeIcon"></i>
+  </div>
+
+  <div class="forgot-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/6146/6146582.png" class="illustration" alt="Forgot Illustration">
+    <h2>Forgot Password</h2>
+
+    <form onsubmit="return handleReset(event)">
+      <div class="mb-3 text-start">
+        <label for="email" class="form-label">Registered Email Address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <button type="submit" class="btn btn-reset w-100">
+        Send Reset Link
+        <div class="spinner-border spinner-border-sm text-light" role="status" id="spinner"></div>
+      </button>
+
+      <div class="bottom-text">
+        <p><a href="login.html">Back to Login</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleMode() {
+      const body = document.body;
+      const icon = document.getElementById("modeIcon");
+      body.classList.toggle("dark");
+      icon.className = body.classList.contains("dark") ? "bi bi-moon-stars" : "bi bi-brightness-high";
+    }
+
+    function handleReset(event) {
+      event.preventDefault();
+      const spinner = document.getElementById("spinner");
+      spinner.classList.add("show");
+
+      // Simulate sending reset email
+      setTimeout(() => {
+        spinner.classList.remove("show");
+        alert("Password reset link sent to your email!");
+      }, 1500);
+    }
+  </script>
+<script>
+  function toggleMode() {
+    const body = document.body;
+    const icon = document.getElementById("modeIcon");
+    const isDark = body.classList.toggle("dark");
+    icon.className = isDark ? "bi bi-moon-stars" : "bi bi-brightness-high";
+    localStorage.setItem("dark-mode", isDark); // Save preference
+  }
+
+  // Load dark mode if previously enabled
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedMode = localStorage.getItem("dark-mode");
+    if (savedMode === "true") {
+      document.body.classList.add("dark");
+      const icon = document.getElementById("modeIcon");
+      if (icon) icon.className = "bi bi-moon-stars";
+    }
+  });
+</script>
+
+</body>
+</html>
